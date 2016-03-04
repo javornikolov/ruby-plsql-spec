@@ -10,6 +10,8 @@ machine:
   ruby:
     version:
       2.3.0
+  java:
+    version: oraclejdk8
 
   # Add some environment variables
   environment:
@@ -29,6 +31,9 @@ machine:
 
 ## Customize dependencies
 dependencies:
+  pre:
+    - rvm install 2.3.0
+    - rvm install jruby-9.0.5.0
   override:
     # - docker info
     # - docker pull wnameless/oracle-xe-11g
@@ -36,6 +41,10 @@ dependencies:
     - .travis/oracle/download.sh
     - .travis/oracle/install.sh
     - .travis/setup_accounts.sh
-    - gem install ruby-oci8
-    - bundle install
+    - rvm-exec 2.3.0 bash -c "gem install ruby-oci8"
+
+test:
+  override:
+    - rvm-exec 2.3.0         bash -c "bundle install; bundle exec rake test"
+    - rvm-exec jruby-9.0.5.0 bash -c "bundle install; bundle exec rake test"
 
