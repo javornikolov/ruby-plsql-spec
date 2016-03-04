@@ -34,8 +34,8 @@ dependencies:
     # - docker pull wnameless/oracle-xe-11g
     # - docker run -d -p 49160:22 -p 49161:1521 wnameless/oracle-xe-11g
     - .travis/oracle/download.sh
-    - sudo .travis/oracle/install.sh
-    - sudo .travis/setup_accounts.sh
+    - .travis/oracle/install.sh
+    - .travis/setup_accounts.sh
     - gem install ruby-oci8
     - bundle install
 
