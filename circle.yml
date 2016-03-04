@@ -13,6 +13,9 @@ machine:
 
   # Add some environment variables
   environment:
+    ORACLE_COOKIE: sqldev
+    ORACLE_FILE: oracle11g/xe/oracle-xe-11.2.0-1.0.x86_64.rpm.zip
+    ORACLE_HOME: /u01/app/oracle/product/11.2.0/xe
     NLS_LANG: AMERICAN_AMERICA.AL32UTF8
     ORACLE_BASE: /u01/app/oracle
     LD_LIBRARY_PATH: $ORACLE_HOME/lib
@@ -20,8 +23,9 @@ machine:
     DATABASE_VERSION: 11.2.0.2
     ORACLE_SID: XE
     DATABASE_NAME: XE
-    ORA_SDTZ: 'Europe/Sofia'
-    TZ: 'Europe/Sofia'
+    ORA_SDTZ: 'Europe/London'
+    TZ: 'Europe/London'
+
 
 ## Customize dependencies
 dependencies:
@@ -30,8 +34,8 @@ dependencies:
     # - docker pull wnameless/oracle-xe-11g
     # - docker run -d -p 49160:22 -p 49161:1521 wnameless/oracle-xe-11g
     - .travis/oracle/download.sh
-    - .travis/oracle/install.sh
-    - .travis/setup_accounts.sh
+    - sudo .travis/oracle/install.sh
+    - sudo .travis/setup_accounts.sh
     - gem install ruby-oci8
     - bundle install
 
