@@ -1,0 +1,37 @@
+## Customize the test machine
+machine:
+  services:
+    - docker
+
+  timezone:
+    Europe/Sofia # Set the timezone
+
+  # Version of ruby to use
+  ruby:
+    version:
+      2.3.0
+
+  # Add some environment variables
+  environment:
+    NLS_LANG: AMERICAN_AMERICA.AL32UTF8
+    ORACLE_BASE: /u01/app/oracle
+    LD_LIBRARY_PATH: $ORACLE_HOME/lib
+    PATH: $PATH:$ORACLE_HOME/jdbc/lib
+    DATABASE_VERSION: 11.2.0.2
+    ORACLE_SID: XE
+    DATABASE_NAME: XE
+    ORA_SDTZ: 'Europe/Sofia'
+    TZ: 'Europe/Sofia'
+
+## Customize dependencies
+dependencies:
+  override:
+    - docker info
+    - docker pull wnameless/oracle-xe-11g
+    - docker run -d -p 49160:22 -p 49161:1521 wnameless/oracle-xe-11g
+    # - .travis/oracle/download.sh
+    # - .travis/oracle/install.sh
+    - .travis/setup_accounts.sh
+    - gem install ruby-oci8
+    - bundle install
+
